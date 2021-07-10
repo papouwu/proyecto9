@@ -2,9 +2,14 @@ import csv
 with open('ResidenciasSanitarias.csv', newline='') as csvbdd:
     lectordatos = csv.reader(csvbdd,  delimiter=' ', quotechar='|' )
     for i in lectordatos:
-        print(', '.join(i))
+        print(', '.join(i))'
 
-''' inicio 
+import pandas as pd
+datos=pd.read_csv('ResidenciasSanitarias.csv', header =0)
+print(datos)
+print(datos ['Categoria'])
+
+'''inicio 
 
 Bienvenido al programa de estadísticas de ocupación de residencias sanitarias.
 
