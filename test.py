@@ -3,7 +3,7 @@ import matplotlib.pyplot as plt
 plt.hist(x)
 plt.show()'''
 
-ejex=[4,8,13,17,20]
+'''ejex=[4,8,13,17,20]
 ejey=[54,67,98,78,45]
 plt.plot(ejex,ejey)
-plt.show()
+plt.show()'''
