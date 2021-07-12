@@ -180,8 +180,9 @@ while opcion != 9:
             break
         else:
             print("\n\n")
+
         
-        elif opcion == 3:
+    elif opcion == 3:
         
         print("Usted seleccionó la opción 3.")
 
@@ -218,6 +219,47 @@ while opcion != 9:
             break
         else:
             print("\n\n")
+
+
+            
+    elif opcion == 4:
+        print("Usted seleccionó la opción 4.")
+        
+        region = mostrarRegiones()
+        
+        nombreRegion = regiones.get(str(region))
+        print(nombreRegion)
+        
+        fecha = recibirFecha()
+        
+        archivo = pd.read_csv(url)
+
+        archivo = archivo.filter(items=["Region" , "Categoria" , fecha])
+
+        archivo = archivo[archivo["Region"]==nombreRegion]
+
+        archivo = archivo[archivo["Categoria"]=="cupos totales"]
+
+
+        cupos = int(archivo[fecha])
+        
+        archivo = pd.read_csv(url)
+        archivo = archivo.filter(items=["Region" , "Categoria" , fecha])
+        archivo = archivo[archivo["Region"]==nombreRegion]
+        archivo = archivo[archivo["Categoria"]=="usuarios en residencia"]
+        residentes = int(archivo[fecha])
+       
+        print("Para la region de " , nombreRegion , " en la fecha ", fecha , " se encontraron los siguientes datos:")
+        print("Residentes: " , residentes)
+        print("Cupos disponibles: " , cupos)
+        
+        seguirPrograma = continuar()
+        
+        if seguirPrograma == False:
+            break
+        else:
+            print("\n\n")
+
             
 
 
