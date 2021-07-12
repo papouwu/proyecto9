@@ -1,6 +1,5 @@
-import csv
-import matplotlib.pyplot as plt      #intilar con: pip install matplotlib 
-
+#Importacion de librerias necesarias para graficar y manipulacion de datos
+import matplotlib.pyplot as plt      
 import pandas as pd
 import numpy as np
 
@@ -60,10 +59,11 @@ def recibirFecha():
 
 
 def leerArchivo():
-    c = pd.read_csv("https://raw.githubusercontent.com/MinCiencia/Datos-COVID19/master/output/producto36/ResidenciasSanitarias.csv")
-    print(c)
+    url=("https://raw.githubusercontent.com/MinCiencia/Datos-COVID19/master/output/producto36/ResidenciasSanitarias.csv")
+    c=pd.read_csv(url)
+    return c
 
-
+#Inicio programa
 regiones ={ "1"  :"Arica y Parinacota",
             "2"  :"Tarapacá",
             "3"  :"Antofagasta",
@@ -81,41 +81,58 @@ regiones ={ "1"  :"Arica y Parinacota",
             "15" : "Aysén",
             "16" :"Magallanes"}
 
+opcion=0
+region=0
+nombreRegion=""
+seguirPrograma=False
+url="https://raw.githubusercontent.com/MinCiencia/Datos-COVID19/master/output/producto36/ResidenciasSanitarias.csv"
 
+print("Bienvenido al programa de estadisitica de ocupacion de Residencias Sanitarias. Para continuar, selecione una opcion:\n\n")
 
-
-
-
-
-
-
-
-'''regiones=['1 - Arica y Parinacota', '2 - Tarapacá','3 - Antofagasta','4 - Atacama','5 - Coquimbo','6 - Valparaíso','7 - Metropolitana','8 - OHiggins','9 - Maule',
-'10 - Ñuble','11 - Biobío','12 - Araucanía','13 - Los Ríos','14 - Los Lagos','15 - Aysén','16 - Magallanes']
-                        
-with open('ResidenciasSanitarias.csv', newline='') as csvbdd:
-    lectordatos = csv.reader(csvbdd,  delimiter=' ', quotechar='|' )
-    for i in lectordatos:'''
-    
-
-while True: 
-    print("bienvenido al programa de estadisitica de ocupacion de Residencias Sanitarias. Para continuar, selecione una opcion:")
+while opcion!=9: 
     print('''
-    opcion 1: Seleccione una región para mostrar los datos respecto a ocupación de Residencias Sanitarias de los últimos 7 días.
-    opcion 2: Mostrar la región con mayor cantidad de residencias, mayor cantidad de cupos para esas residencias y mayor cantidad de residentes.
-    opcion 3: Mostrar la región con menor cantidad de residencias, menor cantidad de cupos para esas residencias y menor cantidad de residentes.
-    opcion 4: Bucar por fecha y región para mostrar residentes vs. cupos.
-    opcion 5: Mostrar densidad de ocupación de las residencias para las últimas 7 fechas a nivel nacional.''')
+    Opcion 1: Seleccione una región para mostrar los datos respecto a ocupación de Residencias Sanitarias de los últimos 7 días.\n
+    Opcion 2: Mostrar la región con mayor cantidad de residencias, mayor cantidad de cupos para esas residencias y mayor cantidad de residentes.\n
+    Opcion 3: Mostrar la región con menor cantidad de residencias, menor cantidad de cupos para esas residencias y menor cantidad de residentes.\n
+    Opcion 4: Buscar por fecha y región para mostrar residentes vs. cupos.\n
+    Opcion 5: Mostrar densidad de ocupación de las residencias para las últimas 7 fechas a nivel nacional.\n
+    Opcion 9: Salir.''')
     
-    opcion=int(input("ingrese su opcion:"))
+    opcion=int(input("Ingrese su opcion: "))
     if opcion == 1:
-        regiones=[]
-        sigla=input("ingrese el numero de la region deseada:")
-    
-    '''elif opcion == 2:
+        print("Usted selecciono la opcion 1.")
+        region=mostrarRegiones()
 
-    elif opcion == 3:
+        nombreRegion=regiones.get(str(region))
+        print(nombreRegion)
 
-    elif opcion == 4:
+        archivo=pd.read_csv(url)
+        archivo=archivo.iloc[: ,np.r[0,1,-7,-6,-5,-4,-3,-2,-1]]
+        archivo=archivo.iloc[archivo["Region"]==nombreRegion]
+        archivo=archivo.iloc[: , -7:]
+        archivo=archivo.iloc[[0,1]]
+        nombres=archivo.columns.tolist()
+        cupos=archivo.iloc[0].values.tolist()
+        usuarios=archivo.iloc[1].values.tolist()
 
-    elif opcion == 5:'''
+        fig,ax=plt.subplots
+        ancho=0.35
+        ax.bar(nombres, cupos,     ancho, label="Cupos")
+        ax.bar(nombres, usuarios,  ancho, label="Usuarios" )
+
+        ax.set_ylabel("Usuarios")
+        ax.set_xlabel("Fechas")
+        ax.set_title("Ocupación de residencias sanitarias en los últimos 7 días para la region " + nombreRegion)
+        ax.legend()
+        plt.xticks(rotation=45)
+        plt.show()
+        
+        print("** Gráfico ploteado **")
+        
+        seguirPrograma = continuar()
+        
+        if seguirPrograma == False:
+            break
+        else:
+            print("\n\n")
+
