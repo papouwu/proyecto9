@@ -180,6 +180,45 @@ while opcion != 9:
             break
         else:
             print("\n\n")
+        
+        elif opcion == 3:
+        
+        print("Usted seleccionó la opción 3.")
+
+        archivo = pd.read_csv(url)
+
+        archivo = archivo.iloc[: ,np.r_[0,1,-1]]
+        
+        archivo = archivo[archivo["Categoria"]=="residencias"]
+        
+        fecha = archivo.columns.tolist()
+        fecha.remove("Region")
+        fecha.remove("Categoria")
+        
+        sfecha = "".join(fecha)
+        
+        archivo = archivo[archivo[sfecha]==archivo[sfecha].min()].iloc[0].tolist()
+        
+        print("La región con menor cantidad de residencias es la región de " , archivo[0] , " con " , archivo[2] , "residencias")
+        
+        region = archivo[0]  
+        
+        archivo = pd.read_csv(url)
+        archivo = archivo.iloc[: ,np.r_[0,1,-1]]
+        archivo = archivo[archivo["Region"]==region]
+        
+        cupos = archivo.iloc[0].values.tolist()
+        usuarios = archivo.iloc[1].values.tolist()
+        
+        print("Esta region cuenta con " , cupos[2] , " cupos totales y " , usuarios[2], " usuarios en residencia.")
+              
+        seguirPrograma = continuar()
+        
+        if seguirPrograma == False:
+            break
+        else:
+            print("\n\n")
+            
 
 
     
