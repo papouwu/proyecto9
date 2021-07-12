@@ -301,6 +301,10 @@ while opcion != 9:
             break
         else:
             print("\n\n")
+     elif opcion == 9:
+        break
+
+print("\n\n**Fin del programa**")      
                
 
             
