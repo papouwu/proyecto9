@@ -259,6 +259,49 @@ while opcion != 9:
             break
         else:
             print("\n\n")
+     
+    
+    
+    elif opcion == 5:
+        print("Usted seleccionó la opción 5.")
+        
+        print("A continuación se mostrará un gráfico de la densidad de ocupación a nivel nacional de las últimas 7 fechas (cupos en residencia utilizados vs cupos totales)")
+        
+        archivo = pd.read_csv(url)
+
+        archivo = archivo.iloc[: ,np.r_[1,-7,-6,-5,-4,-3,-2,-1]]
+        
+        archivo = archivo.groupby(["Categoria"]).sum()
+        
+        archivo = archivo.iloc[[0,2], :]
+        
+        nombres = archivo.columns.tolist()
+        
+        cupos = archivo.iloc[0].values.tolist()
+        
+        usuarios = archivo.iloc[1].values.tolist()
+        
+        fig, ax = plt.subplots()
+        
+        ancho = 0.35
+        
+        ax.bar(nombres, cupos,     ancho, label="Cupos")
+        ax.bar(nombres, usuarios,  ancho, label="Usuarios" )
+        ax.set_ylabel("Usuarios")
+        ax.set_title("Densidad de ocupación de residencias sanitarias a nivel nacional")
+        ax.legend()
+        plt.xticks(rotation=45)
+        plt.show()
+        
+        print("** Gráfico ploteado **")
+        
+        seguirPrograma = continuar()
+        
+        if seguirPrograma == False:
+            break
+        else:
+            print("\n\n")
+               
 
             
 
